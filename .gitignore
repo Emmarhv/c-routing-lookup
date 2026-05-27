@@ -1,0 +1,9 @@
+# C / C++ build outputs
+*.o
+*.out
+*.exe
+my_route_lookup
+
+# IDE and OS files
+.vscode/
+.DS_Store
