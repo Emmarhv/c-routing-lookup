@@ -1,35 +1,34 @@
-# IP Routing Table Lookup (C)
+# IP Routing Lookup (C / Networking)
 
-A low-level C implementation of an IP routing table lookup algorithm. This project simulates how network switches and routers efficiently match incoming packet IP addresses against a routing table using the **Longest Prefix Match (LPM)** algorithm to determine the correct output interface.
+A low-level networking project that implements a highly efficient Longest Prefix Match (LPM) algorithm for IP routing tables using a Trie data structure.
 
-## How It Works
+## 🎯 Objective
+In core internet routers, IP lookups must happen in nanoseconds. The objective of this project was to replace slow, linear routing table searches with an optimized data structure capable of performing Longest Prefix Match (LPM) lookups extremely fast, operating close to the hardware level in C.
 
-The program reads a text file containing routing table entries (IP prefixes and their corresponding output interfaces) and builds an internal **Trie (Prefix Tree)** data structure in memory. 
+## 🚀 What is Achieved
+- **Trie Data Structure:** Implemented a binary Trie (prefix tree) from scratch in C to store network prefixes and their corresponding next-hop output ports.
+- **Memory Management:** Carefully managed dynamic memory allocation (`malloc`/`free`) for tree nodes to prevent memory leaks during routing table updates.
+- **Path Compression (Optional):** Optimized the basic Trie into a compressed structure to reduce depth and speed up memory access times.
+- **Performance Benchmarking:** Verified that the custom Trie implementation drastically outperforms naive linear search methods when processing thousands of simulated IP packets.
 
-1. **Tree Construction:** Each bit of the IP prefix dictates the left/right traversal in the tree, allowing for highly efficient O(N) storage and lookup (where N is the 32-bit length of an IPv4 address).
-2. **Tree Compression:** The algorithm includes a compression phase that eliminates redundant nodes to optimize memory usage.
-3. **Lookup Phase:** When a batch of test IP addresses is fed into the system, it traverses the compressed Trie bit-by-bit to find the longest matching prefix and routes the packet to its corresponding output interface.
-4. **Performance Profiling:** The code uses `clock_gettime` to precisely measure search times and node access counts, providing statistics on the efficiency of the LPM algorithm.
+## 🛠️ Tools & Technologies
+- **Language:** C
+- **Domain:** Telecommunications, Network Routing, Low-Level Algorithms
+- **Concepts:** Longest Prefix Match (LPM), Binary Tries, Dynamic Memory Allocation, Bitwise Operations.
 
-This project demonstrates strong capabilities in low-level networking concepts, dynamic memory management, pointers, and data structure optimization in C.
+## 📖 Usage Guide
 
-## Tech Stack
-- **Language:** C (Standard C99)
-- **Concepts:** Longest Prefix Match (LPM), Prefix Trees (Tries), Memory Compression, IP Routing
-- **Build System:** Makefile
+### Prerequisites
+You need a C compiler (like `gcc`) and a `make` utility installed on your system (Linux/macOS recommended, or MinGW/WSL on Windows).
 
-## How to Run
-
-1. Open your terminal in the root directory.
-2. Compile the code using the provided `Makefile`:
+### Compilation and Execution
+1. Clone the repository.
+2. Navigate to the source folder and compile the project using the provided Makefile:
    ```bash
-   make all
+   make
    ```
-3. Run the executable with a routing table and a set of test IP addresses:
+3. Run the compiled executable, typically passing a routing table file and a file containing IP addresses to look up:
    ```bash
-   ./my_route_lookup routing_table.txt prueba1.txt
+   ./my_route_lookup routing_table.txt ip_packets.txt
    ```
-4. To clean the compiled files:
-   ```bash
-   make clean
-   ```
+*(Refer to the source code comments for the exact expected arguments and table formats).*
